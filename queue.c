@@ -24,9 +24,16 @@
 */
 queue_t *q_new()
 {
-    queue_t *q =  malloc(sizeof(queue_t));
-    /* E se malloc retornar NULL? */
+    char *error_text = "An error occurred on malloc\n";
+    queue_t *q = malloc(sizeof(queue_t));
+    if (!q_allocated(q, error_text)) {
+      return false;
+    }
+
     q->head = NULL;
+    q->tail = NULL;
+    q->size = 0;
+
     return q;
 }
 
@@ -45,13 +52,26 @@ void q_free(queue_t *q)
 */
 bool q_insert_head(queue_t *q, int v)
 {
+    char *error_text = "The queue adress can't be NULL\n";
+    if (!q_allocated(q, error_text)) {
+      return false;
+    }
+
+    *error_text = "An error occurred on malloc\n";
     list_ele_t *newh;
-    /* O que você deverá fazer se q é NULL ? */
     newh = malloc(sizeof(list_ele_t));
-    /* E se malloc retornar NULL? */
+    if (!q_allocated(newh, error_text)) {
+      return false;
+    }
+
     newh->value = v;
     newh->next = q->head;
     q->head = newh;
+    q->size += 1;
+
+    if (q->size == 0)
+      q->tail = q->head;
+
     return true;
 }
 
@@ -63,9 +83,27 @@ bool q_insert_head(queue_t *q, int v)
 */
 bool q_insert_tail(queue_t *q, int v)
 {
-    /* Você precisa escrever o código completo para esta função */
-    /* lembre-se: Você deverá operar no tempo de O(1) */
-    return false;
+    char *error_text = "The queue adress can't be NULL\n";
+    if (!q_allocated(q, error_text)) {
+      return false;
+    }
+
+    *error_text = "An error occurred on malloc\n";
+    list_ele_t *newt;
+    newt = malloc(sizeof(list_ele_t));
+    if (!q_allocated(newt, error_text)) {
+      return false;
+    }
+
+    newt->value = v;
+    newt->next = q->tail;
+    q->tail = newt;
+    q->size += 1;
+
+    if (q->size == 0)
+      q->head = q->tail;
+
+    return true;
 }
 
 /*
@@ -77,8 +115,25 @@ bool q_insert_tail(queue_t *q, int v)
 */
 bool q_remove_head(queue_t *q, int *vp)
 {
-    /* Você precisa consertar este código. */
-    q->head = q->head->next;
+    char *error_text = "The queue adress can't be NULL\n";
+    if (!q_allocated(q, error_text)) {
+      return false;
+    }
+    *error_text = "The removed element adress can't be NULL\n";
+    if (!q_allocated(vp, error_text)) {
+      return false;
+    }
+    *error_text = "The queue is empty\n";
+    if (!q_allocated(q->head, error_text)) {
+      return false;
+    }
+
+    list_ele_t *vp_adr;
+    vp_adr = q->head;
+    *vp = vp_adr->value;
+    q->head = vp_adr->next;
+
+    free(vp_adr);
     return true;
 }
 
@@ -88,9 +143,12 @@ bool q_remove_head(queue_t *q, int *vp)
 */
 int q_size(queue_t *q)
 {
-  /* Você precisa escrever o código completo para esta função */
-  /* lembre-se: Você deverá operar no tempo de O(1) */
-    return 0;
+    char *error_text = "The queue adress can't be NULL\n";
+    if (!q_allocated(q, error_text)) {
+      return false;
+    }
+
+    return q->size;
 }
 
 /*
@@ -103,4 +161,14 @@ int q_size(queue_t *q)
 void q_reverse(queue_t *q)
 {
     /* Você precisa escrever o código completo para esta função */
+}
+
+bool q_allocated(queue_t *q, char *error_text)
+{
+  if (q == NULL) {
+    printf("%s\n", error_text);
+    return false;
+  }
+
+  return true;
 }

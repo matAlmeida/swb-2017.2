@@ -25,6 +25,8 @@ typedef struct ELE {
 /* Estrutura da fila */
 typedef struct {
     list_ele_t *head;  /* Lista ligada de elementos */
+    list_ele_t *tail;
+    int size;
     /*
       Você precisará adicionar mais campos a esta estrutura
       para efetivamente implementar q_size e q_insert_tail
@@ -79,3 +81,8 @@ int q_size(queue_t *q);
   Nenhum efeito se q é NULL ou vazia
  */
 void q_reverse(queue_t *q);
+
+/*
+  Testa se o ponteiro foi alocado corretamente
+*/
+bool q_allocated(queue_t *q, char *error_text);
