@@ -96,12 +96,16 @@ bool q_insert_tail(queue_t *q, int v)
     }
 
     newt->value = v;
-    newt->next = q->tail;
-    q->tail = newt;
+    newt->next = NULL;
+
+    if (q->tail != NULL)
+      q->tail->next = newt;
+      
+      q->tail = newt;
+    if(q->head == NULL)
+      q->head = q->tail;
     q->size += 1;
 
-    if (q->size == 0)
-      q->head = q->tail;
 
     return true;
 }
@@ -133,7 +137,8 @@ bool q_remove_head(queue_t *q, int *vp)
     vp_adr = q->head;
     *vp = vp_adr->value;
     q->head = vp_adr->next;
-
+    q->size -= 1;
+    
     free(vp_adr);
     return true;
 }
@@ -161,18 +166,7 @@ int q_size(queue_t *q)
 */
 void q_reverse(queue_t *q)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return;
-    }
-
-    list_ele_t *fh, *ft;
-    fh = q->head;
-    ft = q->head->next;
-
-    while (fh->next != NULL) {
-        
-    }
+    return;
 }
 
 bool q_allocated(queue_t *q, char *error_text)
