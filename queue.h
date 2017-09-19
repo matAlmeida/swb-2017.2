@@ -13,6 +13,7 @@
  */
 
 #include <stdbool.h>
+#include <string.h>
 
 /************** Declaração da estrutura de dados ****************/
 
@@ -86,3 +87,5 @@ void q_reverse(queue_t *q);
   Testa se o ponteiro foi alocado corretamente
 */
 bool q_allocated(queue_t *q, char *error_text);
+
+bool ele_allocated(list_ele_t *q, char *error_text);
