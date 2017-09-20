@@ -40,22 +40,19 @@ queue_t *q_new()
 /*  Libera todo o espaço utilizado pela fila. */
 void q_free(queue_t *q)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return;
-    }
-    
-    list_ele_t *fe;
-
-    while (q->head->next != NULL) {
-      fe = q->head;
-      q->head = q->head->next;
-      free(fe);
-    }
-
-    free(q->head);
-    free(q);
+  char *error_text = "The queue adress can't be NULL\n";
+  if (!q_allocated(q, error_text)) {
+    return;
   }
+  list_ele_t *fe;
+  while (q->head->next != NULL) {
+    fe = q->head;
+    q->head = q->head->next;
+    free(fe);
+  }
+  free(q->head);
+  free(q);
+}
 
 /*
   Tenta inserir o elemento na cabeça da fila.
