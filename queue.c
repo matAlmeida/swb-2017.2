@@ -48,12 +48,13 @@ void q_free(queue_t *q)
       while (q->head->next) {
         remE = q->head;
         q->head = remE->next;
+
         free(remE);
       }
 
       free(q->head);
     }
-     
+
     free(q);
   }
 }
@@ -145,8 +146,8 @@ bool q_remove_head(queue_t *q, int *vp)
 */
 int q_size(queue_t *q)
 {
-    if(q) return q->size;
-    else return 0;
+  if (q) return q->size;
+  else return 0;
 }
 
 /*
@@ -158,47 +159,28 @@ int q_size(queue_t *q)
 */
 void q_reverse(queue_t *q)
 {
-    if ( q != NULL || q->size <=1 )
-      return;
+  // if (q && q->size >= 2) {
+  //   list_ele_t *ele1 = NULL;
+  //   list_ele_t *ele2 = NULL;
+  //   list_ele_t *ele3 = NULL;
 
-    list_ele_t *pre, *mid, *pos;
+  //   ele1 = q->head;
+  //   ele2 = ele1->next;
 
-    pre = q->head;
-    mid = pre->next;
-    pos = mid->next;
+  //   if (ele2->next && (ele3 = ele2->next));
 
-    pre->next = NULL;
-    mid->next = pre;
-    pre = mid;
-    mid = pos;
-    
-    while (pos != NULL) {
-      pos = pos->next;
-      mid->next = pre;
-      pre = mid;
-      mid = pos;
-    }
+  //   ele1->next = NULL;
+  //   ele2->next = ele1;
+  //   ele1 = ele2;
 
-    q->tail = q->head;
-    q->head = pre;
-}
+  //   while (ele3) {
+  //     ele2 = ele3;
+  //     ele3 = ele3->next;
+  //     ele2->next = ele1;
+  //     ele1 = ele2;
+  //   }
 
-bool q_allocated(queue_t *q, char *error_text)
-{
-  if (q == NULL) {
-    printf("%s\n", error_text);
-    return false;
-  }
-
-  return true;
-}
-
-bool ele_allocated(list_ele_t *q, char *error_text)
-{
-  if (q == NULL) {
-    printf("%s", error_text);
-    return false;
-  }
-
-  return true;
+  //   q->tail = q->head;
+  //   q->head = ele1;
+  // }
 }
