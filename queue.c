@@ -24,34 +24,38 @@
 */
 queue_t *q_new()
 {
-    char *error_text = "An error occurred on malloc\n";
-    queue_t *q = malloc(sizeof(queue_t));
-    if (!q_allocated(q, error_text)) {
-      return false;
-    }
+  queue_t *q;
+  q = malloc(sizeof(queue_t));
 
+  if(q) {
     q->head = NULL;
     q->tail = NULL;
     q->size = 0;
 
     return q;
+  }
+
+  return NULL;
 }
 
 /*  Libera todo o espaço utilizado pela fila. */
 void q_free(queue_t *q)
 {
-  char *error_text = "The queue adress can't be NULL\n";
-  if (!q_allocated(q, error_text)) {
-    return;
+  if (q) {
+    list_ele_t *remE;
+
+    if (q->head) {
+      while (q->head->next) {
+        remE = q->head;
+        q->head = remE->next;
+        free(remE);
+      }
+
+      free(q->head);
+    }
+     
+    free(q);
   }
-  list_ele_t *fe;
-  while (q->head->next != NULL) {
-    fe = q->head;
-    q->head = q->head->next;
-    free(fe);
-  }
-  free(q->head);
-  free(q);
 }
 
 /*
