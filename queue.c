@@ -67,25 +67,27 @@ void q_free(queue_t *q)
 bool q_insert_head(queue_t *q, int v)
 {
   list_ele_t *newE;
-  newE = malloc(sizeof(list_ele_t));
+  
+  if (q) {
+    newE = malloc(sizeof(list_ele_t));
 
-  if (q && newE) {
-    newE->value = v;
-    
-    q->head ? (newE->next = q->head) : (newE->next = NULL);
-
-    q->head = newE;
-
-    if (!q->tail && (q->tail = q->head));
-
-    q->size++;
-
-    return true;
+    if (newE) {
+      newE->value = v;
+      
+      q->head ? (newE->next = q->head) : (newE->next = NULL);
+  
+      q->head = newE;
+  
+      if (!q->tail && (q->tail = q->head));
+  
+      q->size++;
+  
+      return true;
+    }
   }
   
   return false;
 }
-
 
 /*
   Tenta inserir o elemento na calda da fila.
@@ -95,21 +97,24 @@ bool q_insert_head(queue_t *q, int v)
 bool q_insert_tail(queue_t *q, int v)
 {
   list_ele_t *newE;
-  newE = malloc(sizeof(list_ele_t));
   
-  if (q && newE) {
-    newE->value = v;
-    newE->next = NULL;
+  if (q) {
+    newE = malloc(sizeof(list_ele_t));
 
-    if (q->tail && (q->tail->next = newE));
-
-    q->tail = newE;
-
-    if (!q->head && (q->head = q->tail));
-
-    q->size++;
-
-    return true;
+    if (newE) {
+      newE->value = v;
+      newE->next = NULL;
+  
+      if (q->tail && (q->tail->next = newE));
+  
+      q->tail = newE;
+  
+      if (!q->head && (q->head = q->tail));
+  
+      q->size++;
+  
+      return true;
+    }
   }
 
   return false;
@@ -147,7 +152,8 @@ bool q_remove_head(queue_t *q, int *vp)
 int q_size(queue_t *q)
 {
   if (q) return q->size;
-  else return 0;
+  
+  return 0;
 }
 
 /*
