@@ -78,7 +78,7 @@ class Tracer:
             tidList = self.traceDict.keys()
         else:
             if not tid in self.traceDict:
-                print "ERROR: Registro inválido ID %d" % tid
+                print "ERROR: Registro invalido ID %d" % tid
                 return
             tidList = [tid]
         score = 0
@@ -108,14 +108,15 @@ class Tracer:
             print jstring
 
 def usage(name):
-    print "Utilização: %s [-h] [-p PROG] [-t TID] [-v VLEVEL]" % name
+    print "Utilizacaoo: %s [-h] [-p PROG] [-t TID] [-v VLEVEL]" % name
     print "  -h        Apresenta esta mensagem"
     print "  -p PROG   Programa a ser testado"
     print "  -t TID    ID de Registro para teste"
-    print "  -v VLEVEL Configura o nível de relatório (0-3)"
+    print "  -v VLEVEL Configura o nivel de relatorio (0-3)"
     sys.exit(0)
 
 def run(name, args):
+    print name, args
     prog = ""
     tid = 0
     vlevel = 1
@@ -137,7 +138,7 @@ def run(name, args):
         elif opt == '-A':
             autograde = True
         else:
-            print "Opção não reconhecida '%s'" % opt
+            print "Opcao nao reconhecida '%s'" % opt
             usage(name)
     if not levelFixed and autograde:
         vlevel = 0

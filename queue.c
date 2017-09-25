@@ -61,27 +61,24 @@ void q_free(queue_t *q)
 */
 bool q_insert_head(queue_t *q, int v)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return false;
-    }
+  list_ele_t *newE;
+  newE = malloc(sizeof(list_ele_t));
 
-    error_text = "An error occurred on malloc\n";
-    list_ele_t *newh;
-    newh = malloc(sizeof(list_ele_t));
-    if (!ele_allocated(newh, error_text)) {
-      return false;
-    }
+  if (q && newE) {
+    newE->value = v;
+    
+    q->head ? (newE->next = q->head) : (newE->next = NULL);
 
-    newh->value = v;
-    newh->next = q->head;
-    q->head = newh;
-    q->size += 1;
+    q->head = newE;
 
-    if (q->size == 0)
-      q->tail = q->head;
+    if (!q->tail && (q->tail = q->head));
+
+    q->size++;
 
     return true;
+  }
+  
+  return false;
 }
 
 
@@ -92,31 +89,25 @@ bool q_insert_head(queue_t *q, int v)
 */
 bool q_insert_tail(queue_t *q, int v)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return false;
-    }
+  list_ele_t *newE;
+  newE = malloc(sizeof(list_ele_t));
+  
+  if (q && newE) {
+    newE->value = v;
+    newE->next = NULL;
 
-    error_text = "An error occurred on malloc\n";
-    list_ele_t *newt;
-    newt = malloc(sizeof(list_ele_t));
-    if (!ele_allocated(newt, error_text)) {
-      return false;
-    }
+    if (q->tail && (q->tail->next = newE));
 
-    newt->value = v;
-    newt->next = NULL;
+    q->tail = newE;
 
-    if (q->tail != NULL)
-      q->tail->next = newt;
-      
-      q->tail = newt;
-    if(q->head == NULL)
-      q->head = q->tail;
-    q->size += 1;
+    if (!q->head && (q->head = q->tail));
 
+    q->size++;
 
     return true;
+  }
+
+  return false;
 }
 
 /*
@@ -175,7 +166,29 @@ int q_size(queue_t *q)
 */
 void q_reverse(queue_t *q)
 {
-    return;
+    if ( q != NULL || q->size <=1 )
+      return;
+
+    list_ele_t *pre, *mid, *pos;
+
+    pre = q->head;
+    mid = pre->next;
+    pos = mid->next;
+
+    pre->next = NULL;
+    mid->next = pre;
+    pre = mid;
+    mid = pos;
+    
+    while (pos != NULL) {
+      pos = pos->next;
+      mid->next = pre;
+      pre = mid;
+      mid = pos;
+    }
+
+    q->tail = q->head;
+    q->head = pre;
 }
 
 bool q_allocated(queue_t *q, char *error_text)
