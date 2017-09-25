@@ -119,28 +119,20 @@ bool q_insert_tail(queue_t *q, int v)
 */
 bool q_remove_head(queue_t *q, int *vp)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return false;
-    }
-    error_text = "The queue is empty\n";
-    if (!ele_allocated(q->head, error_text)) {
-      return false;
-    }
-    error_text = "The removed element adress can't be NULL\n";
-    if (vp == NULL) {
-      printf("%s", error_text);
-      return false;
-    }
+  list_ele_t *remE;
+  
+  if (q && q->head) {
+    if(vp && (*vp = q->head->value));
 
-    list_ele_t *vp_adr;
-    vp_adr = q->head;
-    *vp = vp_adr->value;
-    q->head = vp_adr->next;
-    q->size -= 1;
+    remE = q->head;
+    q->head = remE->next;
+    q->size--;
 
-    free(vp_adr);
+    free(remE);
     return true;
+  }
+
+  return false;
 }
 
 /*
@@ -149,12 +141,8 @@ bool q_remove_head(queue_t *q, int *vp)
 */
 int q_size(queue_t *q)
 {
-    char *error_text = "The queue adress can't be NULL\n";
-    if (!q_allocated(q, error_text)) {
-      return false;
-    }
-
-    return q->size;
+    if(q) return q->size;
+    else return 0;
 }
 
 /*
