@@ -1,4 +1,4 @@
-.vscode/settings.json
-handin.tar
-qtest
-queue.o
+*
+!.gitignore
+!queue.c
+!queue.h
