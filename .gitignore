@@ -3,4 +3,4 @@
 .vscode/settings.json
 lab-01/handin.tar
 lab-01/qtest
-lab-01/queue.o
+*.o
