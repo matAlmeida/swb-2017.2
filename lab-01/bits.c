@@ -182,7 +182,10 @@ int binNOU(int x, int y) {
  *   Nível: 2
  */
 int bitsPares(int x) {
-  return 2;
+
+  // Transforma todos bits impares em 0 e depois faz o xor com a mascara,
+  // caso os pares sejam iguais a 1 todos numeros serão 0 e retorna o valor negado
+  return !((0x55555555 & x) ^ 0x55555555);
 }
 /* 
  * mascaraBit - Gera uma mascara consistindo de todos os bits altos e baixos de 1's 
