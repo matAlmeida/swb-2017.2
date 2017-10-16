@@ -197,6 +197,8 @@ int bitsPares(int x) {
  *   Rating: 3
  */
 int mascaraBit(int alto, int baixo) {
+
+  
   return 2;
 }
 /*
