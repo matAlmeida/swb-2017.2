@@ -1,7 +1,7 @@
 /* 
  * SWB:APP Data Lab 
  * 
- * <Por Favor coloque o seu nome aqui>
+ * Matheus Almeida Santos Anjos
  * 
  * bits.c - Arquivo fonte com suas soluções para o Lab.
  *          Este é o arquivo que você irá manipular e enviar para seu instrutor.
@@ -171,7 +171,8 @@ NOTAS:
  *   Nível: 1
  */
 int binNOU(int x, int y) {
-  return 2;
+  
+  return (~x & ~y);
 }
 /* 
  * bitsPares - retorna 1 se todos os bits pares na palavra são 1
